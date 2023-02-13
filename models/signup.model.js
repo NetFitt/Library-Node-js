@@ -1,0 +1,52 @@
+
+const mongoose = require('mongoose').set('strictQuery' , true)
+const bcrypt = require('bcrypt')
+
+const url = 'mongodb://127.0.0.1:27017/Library';
+
+const user_schema = mongoose.Schema({
+    email:String,
+    name:String,
+    password:String
+})
+
+let User = mongoose.model('user',user_schema)
+
+exports.signup_model = (name , email, psw)=>{
+    
+    // this is responsable for registering a none existing user
+    
+    return new Promise((resolve , reject)=>{
+
+        mongoose.connect(url).then(()=>{
+            return User.findOne({email:email})
+        }).then((user)=>{
+            
+            if(user){
+                mongoose.disconnect()
+                throw new Error('Email exist')
+                
+            }else{
+                return bcrypt.hash(psw , 10)   
+            }
+        }).then((psw_hash)=>{
+            
+            let user = new User({
+                email:email,
+                name:name,
+                password:psw_hash
+            })
+            
+            return user.save()
+        }).then((user)=>{
+
+            mongoose.disconnect()
+            resolve('registerd!!!')
+
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+    
+
+}

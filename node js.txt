@@ -1,0 +1,163 @@
+
+const http = require('http')
+
+http.createServer((request , response)=>{
+    response.statusCode = 200 , 404 -> its response status 
+    response.setHeader('Content-type' , 'text/html') -> the content type (video or image or text ...etc)
+    response.write('Hello world') -> to write in the page
+    
+    request.url -> return your url can be used with if or switch 
+    response.end('message') -> to end the respnse and show it must put it in the end
+})
+
+
+
+-Node hidden variables
+    ->__dirname
+    ->NODE_ENV = development or production (take one of these two)
+
+-EXPRESS JS
+
+    -versions in package.json 
+        example : "^4.18.2" -> 4 is major , 18 is minor , 2 is patch ('^' this means that this project only work on this major 
+        , '~' this means it works in both this major and minor example "~4.18.2"
+        ,if there is no symboles example "4.18.2" my project need this exact version)
+
+
+    -to start with express (MIDLE WARES)
+
+        const express = require('express');
+        const app = express();
+
+
+        app.use((req,res,next)=>{
+            console.log("welcome home")
+            next() -> next is used when you want to pass to the next midle ware
+        })
+
+        app.use('/about',(req,res,next)=>{
+            console.log("Iam the 2nd midle ware")
+            
+        })
+
+        app.listen(3000, ()=>{console.log("hello")})     
+
+        /app.use can take more than one function example 
+            app.use((req,res,next)=>{
+                console.log('welcome from home')
+                next()
+            },(req,res)=>{
+                console.log('blur')
+                res.send('i send it') -> it sends the res just like end in http module
+            })   
+        
+
+    -body parser
+        
+        ->app.all is same as app.use but in all you have to give exact url
+            all uses (get post put patch delete)
+        -> bodyPareser is a module that is used to get the data from the client   
+            const bodyParser = require('body-parser').urlencoded({extended:true});
+            
+            app.get('/',(req,res,next)=>{
+                
+                res.send('<form action="/form" method="POST"><input name="firstName" type="text"/><button type="submit">send</button> </form>')  
+
+            })
+
+            app.post('/form',bodyParser,(req,res,next)=>{
+                console.log(req.body.firstName)
+            
+            }) 
+
+        -> if you dont use bodyPareser then there is how to do but steel bad 
+
+            app.post('/form',(req,res,next)=>{
+                let arr = [];
+                req.on('data' , (chunk)=>{
+                    
+                    arr.push(chunk)
+                    req.on('end', ()=>{
+                        
+                        let name=Buffer.concat(arr).toString()
+                        console.log(name)
+                    })
+                })
+            
+            })
+        -> bodyParse exist inside express so you dont need to import the module
+            const bodyParser = express.urlencoded({extended:true})
+            
+    -path
+        ->  const path = require('path')
+            app.get('/',(req,res,next)=>{
+    
+                // res.sendFile(__dirname+'/views/index.html') -> this is not gona work on linux instead we use path module 
+                res.send(path.join(__dirname , 'views' , 'index.html'))
+            })
+
+        -> to make a static folder for css files or other constent files you have to create a folder and get its path by use midle ware like:
+            app.use(express.static(path.join(__dirname, 'assets' )))
+
+
+    -EJS embded javascript / jade template / handlebars (template engine)
+        ->  app.set('view engine' , 'ejs')
+            app.set('views' , 'views')
+            inside a middle ware
+            res.render('index.ejs',{name:"mohamed" , lastName:"zerouali"} )
+    -How to use NODE_ENV
+        ->to change its value :
+            in cmd write: set NODE_ENV=production or development
+        -> used to deal with devDependencies 
+            if(app.get('env') == 'development'){
+                app.use(morgan('dev'))
+            }
+            morgan is a devDependencies
+    
+    -Mongodb 
+        ->mongoose
+        for insert data
+            app.get('/create',(req,res)=>{
+
+                const studentSchema = mongo.Schema({
+                    firstName:String,
+                    lastName:String,
+                    age:Number,
+                    Speciality:String
+                })
+
+                let Student = mongo.model('student',studentSchema)
+
+                mongo.connect(url)
+                .then(result => {
+                    Student.insertMany({firstName:'rachid',
+                        lastName:'oumelel',
+                        age:45,
+                        Speciality:'t7itist'}).then(res=>{
+                            console.log(res);
+                            console.log('passed');
+                        })
+                })
+                NOTE: if you want to insert many use array of objects
+                
+            })
+        for reading data
+            mongo.connect(url)
+            .then( async(res) => {
+                let docs = await Student.find({firstName:'rachid'})
+                console.log(docs);
+                mongo.disconnect().then(()=>{console.log('success')})
+            })
+            NOTE : dont give find or findone any callback functions since it result in a error
+        for delete
+            mongo.connect(url)
+                .then(async(res)=>{
+                    await Student.deleteMany({firstName:'dsssss',firstName:'mohamed'})
+                    mongo.disconnect().then(()=> console.log('disconnected '))
+                })
+        for update
+            mongo.connect(url).then( async (res) =>{
+                let edit = await Student.updateOne({firstName:'rachid'} , {firstName:'mohamed'})
+                console.log(edit);
+                mongo.disconnect().then(()=>{console.log('edited')})
+            })

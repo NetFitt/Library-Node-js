@@ -2,7 +2,7 @@ const book_model =require('../models/book.model')
 
 exports.getAllBooksController=(req,res,next)=>{
     book_model.getAllBooks().then(books=>{
-        res.render('products',{books:books})
+        res.render('products',{books:books,verifUser:req.session.userId})
     })
     
 }
@@ -11,7 +11,7 @@ exports.getOneBookController=(req,res,next)=>{
     
 
     book_model.getOneBookDetails(id).then(books=>{
-        res.render('details',{books:books})
+        res.render('details',{books:books ,verifUser:req.session.userId})
     })
     
 }

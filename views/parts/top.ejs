@@ -44,21 +44,31 @@
              
                 </a>
               </li> 
+              <% if(verifUser){ %>
               <li class="nav-item">
                 <a class="nav-link" href="products">Our Products</a>
               </li>
+              <% } %>
               <li class="nav-item">
                 <a class="nav-link " href="about">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact">Contact Us</a>
               </li>
+              <% if(!verifUser){ %>
               <li class="nav-item">
                 <a class="nav-link" href="login">login</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="signup">sign up</a>
               </li>
+              <% }else{ %>
+              <li>
+                <form class="form-inline my-2 my-lg-0" method="POST" action="/logout">
+                  <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+                </form>
+              </li>
+              <% } %>
             </ul>
           </div>
         </div>

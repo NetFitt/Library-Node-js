@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose').set('strictQuery' , true)
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { resolve } = require('path');
 
 const url = 'mongodb://127.0.0.1:27017/Library';
 
@@ -48,5 +49,38 @@ exports.signup_model = (name , email, psw)=>{
         })
     })
     
+}
+
+
+
+exports.login_model=(email , psw)=>{
+
+    return new Promise((resolve,reject)=>{
+        mongoose.connect(url).then(()=>{
+           
+            return User.findOne({email:email})
+        }).then((user)=>{
+            
+            if(user){
+                
+                bcrypt.compare(psw,user.password).then((result)=>{
+                    if(result){
+                        mongoose.disconnect()
+                       
+                        resolve(user._id)
+                    }else{
+                        mongoose.disconnect()
+                        throw new Error('wrong password')
+                    }
+                })
+            }else{
+                mongoose.disconnect()
+                throw new Error('wrong email')
+            }
+
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
 
 }

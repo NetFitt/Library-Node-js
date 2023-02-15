@@ -13,6 +13,8 @@ const user_schema = mongoose.Schema({
 
 let User = mongoose.model('user',user_schema)
 
+// FOR SIGN UP
+
 exports.signup_model = (name , email, psw)=>{
     
     // this is responsable for registering a none existing user
@@ -52,6 +54,8 @@ exports.signup_model = (name , email, psw)=>{
 }
 
 
+// FOR LOGIN
+
 
 exports.login_model=(email , psw)=>{
 
@@ -62,7 +66,7 @@ exports.login_model=(email , psw)=>{
         }).then((user)=>{
             
             if(user){
-                
+                // bcrypt promise
                 bcrypt.compare(psw,user.password).then((result)=>{
                     if(result){
                         mongoose.disconnect()
@@ -72,13 +76,17 @@ exports.login_model=(email , psw)=>{
                         mongoose.disconnect()
                         throw new Error('wrong password')
                     }
+                }).catch(err=>{
+                    reject(err)
                 })
+                // wrong email
             }else{
                 mongoose.disconnect()
                 throw new Error('wrong email')
             }
-
+            
         }).catch((err)=>{
+            console.log('hellow 1')
             reject(err)
         })
     })

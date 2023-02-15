@@ -2,11 +2,11 @@ const session = require('express-session')
 const auth_model =require('../models/auth.model')
 
 exports.getSignupPage=((req,res,next)=>{
-    res.render('signup' , {verifUser:req.session.userId})
+    res.render('signup' , {verifUser:req.session.userId , message:req.flash('message')[0]})
 })
 
 exports.getLoginPage=((req,res,next)=>{
-    res.render('login' , {verifUser:req.session.userId})
+    res.render('login' , {verifUser:req.session.userId , message:req.flash('message')[0]})
 })
 
 exports.signupController=(req,res,next)=>{
@@ -19,7 +19,9 @@ exports.signupController=(req,res,next)=>{
         console.log(result);
     }).catch((err)=>{
         console.log(err);
-        res.redirect('signup')
+        req.flash('message',err.toString().replace('Error:' , ''))
+
+        res.redirect('/signup')
     })
     
 }
@@ -33,7 +35,11 @@ exports.loginController=(req,res,next)=>{
         req.session.userId = id;
         res.redirect('/');
     }).catch((err)=>{
-        console.log(err);
+        console.log('hellow 2')
+        
+        req.flash('message',err.toString().replace('Error:' , ''))
+        res.redirect('/login')
+       
     })
 
 }

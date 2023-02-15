@@ -16,6 +16,9 @@ const signup_router = require('./routes/auth.router')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session)
 
+//connect flash
+const flash = require('connect-flash')
+
 //Express
 const app = express()
 
@@ -26,6 +29,16 @@ const port = 3000;
 
 // assets path
 app.use(express.static(path.join(__dirname , 'assets')))
+
+
+
+// view engine EJS
+
+app.set('view engine' , 'ejs')
+app.set('views','views')
+
+//flash
+app.use(flash())
 
 // the sesion development
 
@@ -41,12 +54,10 @@ app.use(session({
     store:store
 }))
 
-// view engine EJS
-
-app.set('view engine' , 'ejs')
-app.set('views','views')
 
 // frames
+
+
 
 app.use('/',home_router)
 app.use('/products',books_router)

@@ -17,7 +17,11 @@
           <input name="psw" type="password" id="form2Example2" class="form-control" />
           <label class="form-label" for="psw">Password</label>
         </div>  
-      
+        <% if(message){ %>
+        <div class="alert alert-danger" role="alert">
+          <%= message %>
+        </div>
+        <% } %>
         <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
        

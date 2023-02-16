@@ -28,6 +28,15 @@
         <label for="exampleFormControlFile1">Image</label>
         <input name="image" type="file" accept=".png , .jpg , .jpeg" class="form-control-file" id="exampleFormControlFile1">
       </div>
+      <% if(error){ %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+      <% }else if(succes){ %>
+        <div class="alert alert-success" role="alert">
+          <%= succes %>
+        </div>
+      <%}%>
     
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

@@ -12,11 +12,13 @@ const bookschema = mongoose.Schema({
     price:Number,
     auther:String,
     image:String,
-    userId:Schema.Types.ObjectId
+    userId:String
 
 })
 
 let Book = mongoose.model('books' , bookschema)
+
+// getting all books for all books page
 
 exports.getAllBooks=()=>{
     return new Promise((resolve , reject)=>{
@@ -25,12 +27,14 @@ exports.getAllBooks=()=>{
         }).then(books =>{
             mongoose.disconnect();
             resolve(books)
-        }).then(err=> {
+        }).catch(err=> {
             reject(err)
         })
     })
 
 }
+
+// getting only 3 books for home page
 
 exports.getThreeBooks=()=>{
     return new Promise((resolve , reject)=>{
@@ -39,12 +43,14 @@ exports.getThreeBooks=()=>{
         }).then(books =>{
             mongoose.disconnect();
             resolve(books)
-        }).then(err=> {
+        }).catch(err=> {
             reject(err)
         })
     })
 
 }
+
+// get the details about spesific book
 
 exports.getOneBookDetails=(id)=>{
     return new Promise((resolve , reject)=>{
@@ -55,12 +61,14 @@ exports.getOneBookDetails=(id)=>{
             console.log(books);
             mongoose.disconnect();
             resolve(books)
-        }).then(err=> {
+        }).catch(err=> {
             reject(err)
         })
     })
 
 }
+
+// posting books for addbooks page
 
 exports.postOneBook=(title , auther ,price ,description, image ,userId)=>{
     return new Promise((resolve, reject) => {
@@ -90,4 +98,21 @@ exports.postOneBook=(title , auther ,price ,description, image ,userId)=>{
             reject(err)
         })
     })
+}
+
+exports.getMybooks=(userId)=>{
+    return new Promise((resolve , reject)=>{
+        mongoose.connect(url).then(()=>{
+           
+            return Book.find({userId:userId})
+        }).then(books =>{
+            
+            mongoose.disconnect()
+            resolve(books)
+            
+        }).catch(err=>{
+            reject(err)
+        })
+    })
+
 }

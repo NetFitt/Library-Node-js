@@ -1,9 +1,7 @@
 const book_model =require('../models/book.model')
 
 
-exports.getAddBookPage=(req,res,next)=>{
-    res.render('bookadd' , {verifUser:req.session.userId})
-}
+
 
 exports.getAllBooksController=(req,res,next)=>{
     book_model.getAllBooks().then(books=>{
@@ -21,6 +19,10 @@ exports.getOneBookController=(req,res,next)=>{
     
 }
 
+exports.getAddBookPage=(req,res,next)=>{
+    res.render('bookadd' , {verifUser:req.session.userId , succes:req.flash('SuccessMessage')[0],error:req.flash('ErrorMessage')[0]})
+}
+
 exports.postOneBookController=(req,res,next)=>{
 
     let title = req.body.title
@@ -32,14 +34,29 @@ exports.postOneBookController=(req,res,next)=>{
 
 
     book_model.postOneBook(title ,auther ,price ,description ,image ,userId).then(resulet=>{
-       
-        res.redirect('/books')
+        req.flash('SuccessMessage' ,resulet)
+      
+        res.redirect('/books/addbooks')
 
     }).catch(err=>{
+        
+        req.flash('ErrorMessage' ,err.toString())
       
         res.redirect('/books/addbooks')
     })
-    
 
 }
 
+// MY BOOKS
+
+exports.getMyBooksController=(req,res,next)=>{
+    let userId = req.session.userId
+
+    book_model.getMybooks(userId).then(books=>{
+        console.log(books);
+        res.render('mybooks', {books:books,verifUser:req.session.userId})
+    }).catch(err=>{
+        console.log(err);
+    })
+
+}

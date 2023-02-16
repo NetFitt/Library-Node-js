@@ -63,9 +63,17 @@ app.use('/',home_router)
 app.use('/books',books_router)
 app.use('/',signup_router)
 
+app.get('/books/mybooks' , (req,res)=>{
+    res.render('mybooks' , {verifUser:req.session.userId})
+})
 
+app.get('/contact' , (req,res)=>{
+    res.render('contact', {verifUser:req.session.userId})
+})
 
-
+app.get('/about' , (req,res)=>{
+    res.render('about', {verifUser:req.session.userId})
+})
 
 
 app.listen(port, console.log('connected') )

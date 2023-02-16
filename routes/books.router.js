@@ -15,11 +15,16 @@ const storage = multer.diskStorage({
   });
 const upload = multer({storage:storage})
 
+// detail page
 
 router.get('/' ,guard_auth.isAuth, All_books_contr.getAllBooksController )
 router.get('/detail/:id' ,guard_auth.isAuth, All_books_contr.getOneBookController)
 
+// adding books
 router.get('/addbooks', guard_auth.isAuth ,All_books_contr.getAddBookPage )
 router.post('/addbooks',guard_auth.isAuth ,upload.single('image') ,All_books_contr.postOneBookController)
+
+// my books
+router.get('/mybooks' , guard_auth.isAuth ,All_books_contr.getMyBooksController )
 
 module.exports = router

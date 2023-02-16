@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/css/owl.css">
 </head>
 
-<body>
+<body >
     
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
@@ -40,9 +40,7 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item ">
-                <a class="nav-link" href="/">Home
-             
-                </a>
+                <a class="nav-link" href="/">Home</a>
               </li> 
               <% if(verifUser){ %>
               <li class="nav-item">
@@ -51,13 +49,20 @@
               <li class="nav-item">
                 <a class="nav-link " href="/books/addbooks">Add Books</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/books/mybooks">My Books</a>
+              </li>
               <% } %>
+
               <li class="nav-item">
                 <a class="nav-link " href="/about">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/contact">Contact Us</a>
               </li>
+
+              <!-- LOGIN AND SIGN UP -->
+
               <% if(!verifUser){ %>
               <li class="nav-item">
                 <a class="nav-link" href="/login">login</a>

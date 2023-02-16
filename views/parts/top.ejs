@@ -46,21 +46,24 @@
               </li> 
               <% if(verifUser){ %>
               <li class="nav-item">
-                <a class="nav-link" href="products">Our Products</a>
+                <a class="nav-link" href="/books">Our books</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/books/addbooks">Add Books</a>
               </li>
               <% } %>
               <li class="nav-item">
-                <a class="nav-link " href="about">About Us</a>
+                <a class="nav-link " href="/about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact">Contact Us</a>
+                <a class="nav-link" href="/contact">Contact Us</a>
               </li>
               <% if(!verifUser){ %>
               <li class="nav-item">
-                <a class="nav-link" href="login">login</a>
+                <a class="nav-link" href="/login">login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="signup">sign up</a>
+                <a class="nav-link" href="/signup">sign up</a>
               </li>
               <% }else{ %>
               <li>

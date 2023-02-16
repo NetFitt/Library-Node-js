@@ -16,9 +16,9 @@ exports.signupController=(req,res,next)=>{
 
     auth_model.signup_model(name ,email , psw).then((result)=>{
         res.redirect('/login')
-        console.log(result);
+        
     }).catch((err)=>{
-        console.log(err);
+        
         req.flash('message',err.toString().replace('Error:' , ''))
 
         res.redirect('/signup')
@@ -35,7 +35,7 @@ exports.loginController=(req,res,next)=>{
         req.session.userId = id;
         res.redirect('/');
     }).catch((err)=>{
-        console.log('hellow 2')
+       
         
         req.flash('message',err.toString().replace('Error:' , ''))
         res.redirect('/login')

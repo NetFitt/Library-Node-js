@@ -1,0 +1,37 @@
+<%-include('parts/top.ejs') %>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+  <form method="POST" action="/books/addbooks" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="Title book" placeholder="Enter Title">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Auther</label>
+      <input name="auther" type="text" class="form-control" id="exampleInputPassword1" placeholder="Auther">
+    </div>
+    <div class="form-group">
+      <label class="form-check-label" for="exampleCheck1">description</label>
+      <input name="description" type="text" class="form-control" placeholder="description" id="exampleCheck1">
+      
+    </div>
+    <div class="form-group">
+        <label class="form-check-label" for="exampleCheck1">price</label>
+        <input name="price" type="number" class="form-control" placeholder="price" id="exampleCheck1">
+        
+    </div>
+    
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Image</label>
+        <input name="image" type="file" accept=".png , .jpg , .jpeg" class="form-control-file" id="exampleFormControlFile1">
+      </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+<%-include('parts/bottom.ejs') %>

@@ -38,7 +38,7 @@ app.set('view engine' , 'ejs')
 app.set('views','views')
 
 //flash
-app.use(flash())
+
 
 // the sesion development
 
@@ -57,10 +57,10 @@ app.use(session({
 
 // frames
 
-
+app.use(flash())
 
 app.use('/',home_router)
-app.use('/products',books_router)
+app.use('/books',books_router)
 app.use('/',signup_router)
 
 

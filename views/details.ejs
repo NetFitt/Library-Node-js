@@ -4,14 +4,14 @@
 
 <div class="container">
     <div class="row">
-      <div class="col-sm">
-        <img src="/images/product_06.jpg" alt="">
+      <div style="max-width: 400px;" class="col-sm">
+        <img style="width:100%" src="/uploads/<%= book.image  %>" alt="">
       </div>
       <div class="col-sm">
-        <h1><%= books.title %></h1>
-        <h4><%= books.price %></h4>
-        <h5><%= books.auther %></h5>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio accusantium aut tempore voluptatem, ratione id atque. Maiores assumenda sint iure reprehenderit necessitatibus nihil, iste ab sapiente accusantium accusamus amet officia!</p>
+        <h1><%= book.title %></h1>
+        <h4><%= book.price %></h4>
+        <h5><%= book.auther %></h5>
+        <p><%= book.description  %></p>
 
       </div>
       

@@ -86,7 +86,7 @@ exports.login_model=(email , psw)=>{
             }
             
         }).catch((err)=>{
-            console.log('hellow 1')
+            
             reject(err)
         })
     })

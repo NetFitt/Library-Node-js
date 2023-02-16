@@ -87,7 +87,10 @@ http.createServer((request , response)=>{
             })
         -> bodyParse exist inside express so you dont need to import the module
             const bodyParser = express.urlencoded({extended:true})
-            
+    -multer() 
+        will give ability to save images or files
+        -its a middle ware function that returns object
+            multer({}).single('name')-> name is the name of input image or file
     -path
         ->  const path = require('path')
             app.get('/',(req,res,next)=>{
